@@ -38,7 +38,7 @@ function createMainWindow() {
     frame: false,
     show: false,
     maximizable: false,
-    minimizable: false,
+    minimizable: true,
     fullscreenable: false,
     transparent: global.setting.appearance.transparency < 1,
     skipTaskbar: global.setting.general.hideTaskbar,
@@ -239,11 +239,17 @@ function showMainWindow(blurHide: boolean, autoHide = false) {
     if (!global.setting.general.alwaysTop) {
       mainWindow.setAlwaysOnTop(true, "screen-saver");
     }
-    global.mainWindow.show();
+    if(!global.mainWindow.isVisible()){
+      global.mainWindow.show();
+    }
+    if(global.mainWindow.isMinimized()){
+      global.mainWindow.restore();
+    }
     global.mainWindow.focus();
     if (!global.setting.general.alwaysTop) {
       mainWindow.setAlwaysOnTop(false);
     }
+    
     global.blurHide = blurHide;
   }
 }
@@ -253,7 +259,7 @@ function showMainWindow(blurHide: boolean, autoHide = false) {
  */
 function hideMainWindow() {
   if (global.mainWindow.isVisible()) {
-    global.mainWindow.hide();
+    global.mainWindow.minimize();
     global.blurHide = false;
   }
 }

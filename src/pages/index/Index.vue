@@ -372,6 +372,7 @@ function resize() {
 nextTick(() => {
   if (!store.setting.general.startupTray) {
     window.main.showWindow(false, false);
+    window.main.hideWindow();
   }
   window.main.initData();
 });
